@@ -1,0 +1,14 @@
+{
+  "name": "emulatorjs-cf",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev --config apps/worker/wrangler.toml",
+    "deploy": "wrangler deploy --config apps/worker/wrangler.toml",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "wrangler": "^3.99.0",
+    "@cloudflare/workers-types": "^4.20241205.0"
+  }
+}

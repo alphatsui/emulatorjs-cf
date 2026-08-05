@@ -1,0 +1,34 @@
+name = "emulatorjs-cf"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+R2_MODE = "mock"
+ADMIN_TOKEN = "dev-token-change-me"
+
+[[r2_buckets]]
+binding = "ROMS"
+bucket_name = "emulatorjs-roms"
+
+[[r2_buckets]]
+binding = "ART"
+bucket_name = "emulatorjs-art"
+
+[[r2_buckets]]
+binding = "CONFIG"
+bucket_name = "emulatorjs-config"
+
+[[r2_buckets]]
+binding = "PROFILES"
+bucket_name = "emulatorjs-profiles"
+
+[durable_objects]
+bindings = [
+  { name = "ROOM", class_name = "RoomDO" },
+  { name = "SCANNER", class_name = "ScannerDO" }
+]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["RoomDO", "ScannerDO"]
