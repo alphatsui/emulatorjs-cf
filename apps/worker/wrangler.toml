@@ -4,8 +4,7 @@ compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
 
 [vars]
-R2_MODE = "mock"
-ADMIN_TOKEN = "dev-token-change-me"
+R2_MODE = "live"
 
 [[r2_buckets]]
 binding = "ROMS"
@@ -31,4 +30,4 @@ bindings = [
 
 [[migrations]]
 tag = "v1"
-new_classes = ["RoomDO", "ScannerDO"]
+new_sqlite_classes = ["RoomDO", "ScannerDO"]
