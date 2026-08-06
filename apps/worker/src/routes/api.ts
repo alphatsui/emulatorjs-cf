@@ -127,13 +127,15 @@ async function sliceStream(obj: R2ObjectBody, start: number, end: number): Promi
           bytesSkipped += value.length;
           if (bytesSkipped >= start) {
             const offset = value.length - (bytesSkipped - start);
-            writer.write(value.slice(offset));
-            bytesRead += value.length - offset;
+            const toWrite = Math.min(targetBytes - bytesRead, value.length - offset);
+            writer.write(value.slice(offset, offset + toWrite));
+            bytesRead += toWrite;
           }
         } else {
           const remaining = targetBytes - bytesRead;
-          writer.write(value.slice(0, remaining));
-          bytesRead += value.length;
+          const toWrite = Math.min(remaining, value.length);
+          writer.write(value.slice(0, toWrite));
+          bytesRead += toWrite;
         }
       }
     } finally {
