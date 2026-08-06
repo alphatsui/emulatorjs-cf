@@ -110,14 +110,38 @@ apiRoutes.get('/consoles', (c) => {
 });
 
 async function sliceStream(obj: R2ObjectBody, start: number, end: number): Promise<ReadableStream> {
-  const buf = await obj.arrayBuffer();
-  const slice = buf.slice(start, end + 1);
-  return new ReadableStream({
-    start(controller) {
-      controller.enqueue(new Uint8Array(slice));
-      controller.close();
-    },
-  });
+  const { readable, writable } = new TransformStream();
+  const reader = obj.body.getReader();
+  let bytesSkipped = 0;
+  let bytesRead = 0;
+  const targetBytes = end - start + 1;
+
+  (async () => {
+    const writer = writable.getWriter();
+    try {
+      while (bytesRead < targetBytes) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        if (bytesSkipped < start) {
+          bytesSkipped += value.length;
+          if (bytesSkipped >= start) {
+            const offset = value.length - (bytesSkipped - start);
+            writer.write(value.slice(offset));
+            bytesRead += value.length - offset;
+          }
+        } else {
+          const remaining = targetBytes - bytesRead;
+          writer.write(value.slice(0, remaining));
+          bytesRead += value.length;
+        }
+      }
+    } finally {
+      writer.close();
+    }
+  })();
+
+  return readable;
 }
 
 function guessContentType(filename: string): string {
