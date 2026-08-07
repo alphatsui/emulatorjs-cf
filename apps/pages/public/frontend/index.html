@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon.png" crossorigin="use-credentials">
+    <link rel="manifest" href="manifest.json" crossorigin="use-credentials">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="config.js"></script>
+    <script src="js/vendor/jquery.min.js"></script>
+    <script src="js/vendor/hammer.min.js"></script>
+    <script src="js/index.js"></script>
+  </head>
+  <body>
+    <div id="menu">
+      <a target="_blank" href="filebrowser.html">
+        <img class="file-button" src="css/folder.svg"/>
+      </a>
+      <img class="full-main" onclick="fullscreen()" src="css/fullscreen.svg"/>
+      <video autoplay muted loop id="bgvid">
+        <source id="vid" type="video/mp4">
+      </video>
+      <img id="background" class="background">
+      <img id="corner" class="corner">
+      <div class="page-container">
+        <div id="active-list" class="games-list"></div>
+        <div class="artwork"></div>
+      </div>
+      <div id="games-list" class="hidden"></div>
+    </div>
+  </body>
+</html>
